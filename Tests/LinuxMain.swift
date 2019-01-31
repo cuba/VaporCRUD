@@ -1,7 +1,7 @@
 import XCTest
 
-import ClosedBookCoreTests
+import VaporCRUDTests
 
 var tests = [XCTestCaseEntry]()
-tests += ClosedBookCoreTests.allTests()
+tests += VaporCRUDTests.allTests()
 XCTMain(tests)
