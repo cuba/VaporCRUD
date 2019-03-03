@@ -11,6 +11,7 @@ public enum CrudOperation {
     case create
     case show
     case update
+    case replace
     case destroy
     case list
     
@@ -21,16 +22,18 @@ public enum CrudOperation {
         case .update        : return "UPDATE"
         case .destroy       : return "DESTROY"
         case .list          : return "LIST"
+        case .replace       : return "REPLACE"
         }
     }
     
-    public var methods: [HTTPMethod] {
+    public var method: HTTPMethod {
         switch self {
-        case .create    : return [.POST]
-        case .show      : return [.GET]
-        case .update    : return [.PATCH]
-        case .destroy   : return [.DELETE]
-        case .list      : return [.GET]
+        case .create    : return .POST
+        case .show      : return .GET
+        case .update    : return .PATCH
+        case .destroy   : return .DELETE
+        case .list      : return .GET
+        case .replace   : return .PUT
         }
     }
     
@@ -38,7 +41,7 @@ public enum CrudOperation {
         var path = basePath
         
         switch self {
-        case .destroy, .show, .update:
+        case .destroy, .show, .update, .replace:
             path.append(String.parameter)
         default:
             break
