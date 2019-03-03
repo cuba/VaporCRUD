@@ -11,12 +11,11 @@ import Vapor
 public extension Router {
     
     public func register(path: [PathComponent], operation: CrudOperation, type: CrudControllerInterface.Type) {
-        for method in operation.methods {
-            let adjustedPath: [PathComponent] = [.constant(method.string)] + path
-            let requestHandler = CrudRequestHandler(operation: operation, path: adjustedPath, type: type)
-            let route = Route<Responder>(path: adjustedPath, output: requestHandler)
-            register(route: route)
-        }
+        let method = operation.method
+        let adjustedPath: [PathComponent] = [.constant(method.string)] + path
+        let requestHandler = CrudRequestHandler(operation: operation, path: adjustedPath, type: type)
+        let route = Route<Responder>(path: adjustedPath, output: requestHandler)
+        register(route: route)
     }
     
     public func register(path: String, operation: CrudOperation, type: CrudControllerInterface.Type) {
