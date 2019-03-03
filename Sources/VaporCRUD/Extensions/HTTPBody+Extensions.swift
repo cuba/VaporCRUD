@@ -9,9 +9,9 @@ import Foundation
 import HTTP
 
 public extension HTTPBody {
-    public init<T: Encodable>(json: T) throws {
+    public init<T: Encodable>(json: T, dateEncodingStrategy: JSONEncoder.DateEncodingStrategy = .default) throws {
         let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .default
+        encoder.dateEncodingStrategy = dateEncodingStrategy
         
         if #available(OSX 10.13, *) {
             encoder.outputFormatting = [.sortedKeys, .prettyPrinted]
@@ -23,10 +23,10 @@ public extension HTTPBody {
         self.init(data: data)
     }
     
-    public func object<T: Decodable>(_ type: T.Type) throws -> T? {
+    public func object<T: Decodable>(_ type: T.Type, dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .default) throws -> T? {
         guard let data = self.data else { return nil }
         let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .default
+        decoder.dateDecodingStrategy = dateDecodingStrategy
         
         return try decoder.decode(type, from: data)
     }
