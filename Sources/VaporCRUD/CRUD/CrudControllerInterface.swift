@@ -21,7 +21,7 @@ public protocol CrudControllerInterface {
 
 public extension CrudControllerInterface {
     
-    public func response(from request: Request, with operation: CrudOperation) throws -> Future<Response> {
+    func response(from request: Request, with operation: CrudOperation) throws -> Future<Response> {
         switch operation {
         case .create    : return try create(request: request)
         case .destroy   : return try destroy(request: request)
