@@ -1,5 +1,5 @@
 import XCTest
-@testable import ClosedBookCore
+@testable import VaporCRUD
 
 final class ClosedBookCoreTests: XCTestCase {
     func testExample() {

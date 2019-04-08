@@ -10,7 +10,7 @@ import Vapor
 
 public extension Router {
     
-    public func register(path: [PathComponent], operation: CrudOperation, type: CrudControllerInterface.Type) {
+    func register(path: [PathComponent], operation: CrudOperation, type: CrudControllerInterface.Type) {
         let method = operation.method
         let adjustedPath: [PathComponent] = [.constant(method.string)] + path
         let requestHandler = CrudRequestHandler(operation: operation, path: adjustedPath, type: type)
@@ -18,29 +18,29 @@ public extension Router {
         register(route: route)
     }
     
-    public func register(path: String, operation: CrudOperation, type: CrudControllerInterface.Type) {
+    func register(path: String, operation: CrudOperation, type: CrudControllerInterface.Type) {
         let pathComponents = path.convertToPathComponents()
         register(path: pathComponents, operation: operation, type: type)
     }
     
-    public func register(path: PathComponentsRepresentable, operation: CrudOperation, type: CrudControllerInterface.Type) {
+    func register(path: PathComponentsRepresentable, operation: CrudOperation, type: CrudControllerInterface.Type) {
         let pathComponents = path.convertToPathComponents()
         register(path: pathComponents, operation: operation, type: type)
     }
     
-    public func register(basePath: [PathComponent], operations: [CrudOperation], type: CrudControllerInterface.Type) {
+    func register(basePath: [PathComponent], operations: [CrudOperation], type: CrudControllerInterface.Type) {
         for operation in operations {
             let path = operation.path(fromBasePath: basePath)
             register(path: path, operation: operation, type: type)
         }
     }
     
-    public func register(basePath: String, operations: [CrudOperation], type: CrudControllerInterface.Type) {
+    func register(basePath: String, operations: [CrudOperation], type: CrudControllerInterface.Type) {
         let pathMatcher = PathMatcher(path: basePath)
         register(basePath: pathMatcher, operations: operations, type: type)
     }
     
-    public func register(basePath: PathComponentsRepresentable, operations: [CrudOperation], type: CrudControllerInterface.Type) {
+    func register(basePath: PathComponentsRepresentable, operations: [CrudOperation], type: CrudControllerInterface.Type) {
         let pathComponents = basePath.convertToPathComponents()
         register(basePath: pathComponents, operations: operations, type: type)
     }
